@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 set(NAME pico-keyboard)
-set(PICO_SDK_PATH ${CMAKE_CURRENT_LIST_DIR}/../pico-sdk)
-include(pico_sdk_import.cmake)
+set(PICO_SDK_PATH ${CMAKE_CURRENT_LIST_DIR}/pico-sdk)
+set(CMAKE_EXPORT_COMPILE_COMMANDS True)
+include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
 project(${NAME} C CXX ASM)
 set(CMAKE_C_STANDARD 11)
