@@ -1,6 +1,6 @@
 #pragma once
-#include <tusb.h>
 #include "hid/hid_descriptors.h"
+#include <tusb.h>
 
 enum { ITF_NUM_HID_IO, ITF_NUM_HID_KBM, ITF_NUM_TOTAL };
 
