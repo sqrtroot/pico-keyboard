@@ -2,6 +2,17 @@
 #include "tusb.h"
 #include <algorithm>
 #include <charconv>
+#include "hid/hid_descriptors.h"
+
+extern "C" uint8_t const *tud_hid_descriptor_report_cb(uint8_t itf) {
+  if(itf == 0) {
+    return desc_hid_io_report;
+  } else if(itf == 1) {
+    return desc_hid_kbm_report;
+  }
+
+  return NULL;
+}
 
 extern "C" uint16_t tud_hid_get_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t report_type, uint8_t *buffer, uint16_t reqlen) {
   return 0;

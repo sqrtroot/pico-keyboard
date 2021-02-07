@@ -13,10 +13,11 @@ pico_sdk_init()
 add_executable(${NAME}
     src/main.cpp
 
-    src/device_callbacks.c
-    src/usb_descriptors.c
+    src/usb/usb_device_callbacks.c
+    src/usb/usb_descriptors.c
 
-    src/hid_callbacks.cpp
+    src/hid/hid_callbacks.cpp
+    
     src/System.cpp
     src/VoltMeter.cpp
 )
