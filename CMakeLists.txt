@@ -18,8 +18,8 @@ add_executable(${NAME}
 
     src/hid/hid_callbacks.cpp
     
-    src/System.cpp
-    src/VoltMeter.cpp
+    src/System/System.cpp
+    src/System/VoltMeter.cpp
 )
 
 target_include_directories(${NAME} PRIVATE

@@ -1,4 +1,4 @@
-#include "VoltMeter.hpp"
+#include "System/VoltMeter.hpp"
 #include "hardware/pwm.h"
 
 VoltMeter::VoltMeter(uint pinNumber):
