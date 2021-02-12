@@ -22,36 +22,25 @@ extern "C" uint16_t tud_hid_get_report_cb(uint8_t itf, uint8_t report_id, hid_re
 
 extern "C" void tud_hid_set_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t report_type, uint8_t const *buffer, uint16_t bufsize) {
   switch(itf) {
-    case ITF_NUM_HID_IO:
+    case ITF_NUM_HID_KBM:
       hid_kbm_callback(report_id, report_type, buffer, bufsize);
       break;
-    case ITF_NUM_HID_KBM:
+    case ITF_NUM_HID_IO:
       hid_io_callback(report_id, report_type, buffer, bufsize);
       break;
+    default:
+      __unreachable();
   };
 }
 
 void hid_kbm_callback(uint8_t report_id, hid_report_type_t report_type, uint8_t const *buffer, uint16_t bufsize) {
-  uint32_t new_blinking_speed;
-  auto     convResult = std::from_chars((const char *) buffer, (const char *) buffer + bufsize, new_blinking_speed);
-  if(convResult.ec == std::errc() /*no error*/) {
-    const auto new_pwm_value = std::min((uint32_t) 100, new_blinking_speed);
-    System::getSystem().voltmeter.setLevel(new_pwm_value);
-    System::getSystem().blink_interval_ms = new_blinking_speed;
-  }
-}
-
-void hid_io_callback(uint8_t report_id, hid_report_type_t report_type, uint8_t const *buffer, uint16_t bufsize) {
   if(tud_hid_n_ready(ITF_NUM_HID_KBM)) {
     // use to avoid send multiple consecutive zero report for keyboard
     static bool has_key  = false;
     auto &      keyboard = System::getSystem().keyboard_hid;
-    auto        keycodes = System::getSystem().keyboard_hid.getCurrentKeycodes();
-    if(keyboard.keypresses.size() > 0){
-      board_led_on();
-    }
-    if(std::any_of(keycodes.begin(), keycodes.end(), [](auto a) { return a != 0; })) {
-      tud_hid_n_keyboard_report(ITF_NUM_HID_KBM, 1, 0, keycodes.data());
+    if(keyboard.anyKeyPressed()) {
+      auto keypresses = keyboard.getCurrentKeycodes();
+      tud_hid_n_keyboard_report(ITF_NUM_HID_KBM, 1, 0, keypresses.data());
       has_key = true;
     } else {
       if(has_key) {
@@ -59,5 +48,15 @@ void hid_io_callback(uint8_t report_id, hid_report_type_t report_type, uint8_t c
         has_key = false;
       }
     }
+  }
+}
+
+void hid_io_callback(uint8_t report_id, hid_report_type_t report_type, uint8_t const *buffer, uint16_t bufsize) {
+  uint32_t new_blinking_speed;
+  auto     convResult = std::from_chars((const char *) buffer, (const char *) buffer + bufsize, new_blinking_speed);
+  if(convResult.ec == std::errc() /*no error*/) {
+    const auto new_pwm_value = std::min((uint32_t) 100, new_blinking_speed);
+    System::getSystem().voltmeter.setLevel(new_pwm_value);
+    System::getSystem().blink_interval_ms = new_blinking_speed;
   }
 }
