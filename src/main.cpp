@@ -8,7 +8,8 @@
 
 int main() {
   board_init();
-
+  stdio_init_all();
+  printf("Hello, world!\n");
   gpio_init(16);
   gpio_set_function(16, GPIO_FUNC_SIO);
   gpio_set_dir(16, GPIO_IN);
@@ -17,7 +18,7 @@ int main() {
   tusb_init();
   bool  pressed = false;
   auto &system  = System::getSystem();
-  board_led_off();
+  // board_led_off();
   while(true) {
     tud_task();
     system.systemTask();
@@ -25,13 +26,11 @@ int main() {
       if(!gpio_get(16)) {
         system.keyboard_hid.pressButton(HID_KEY_A);
         pressed                  = true;
-        system.blink_interval_ms = 500;
       }
     } else {
       if(gpio_get(16)) {
         system.keyboard_hid.releaseButton(HID_KEY_A);
         pressed                  = false;
-        system.blink_interval_ms = 100;
       }
     }
   }

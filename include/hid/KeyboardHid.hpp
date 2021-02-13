@@ -19,14 +19,15 @@ struct KeyPress {
 };
 
 class KeyboardHid {
-public:
   std::vector<KeyPress> keypresses;
 
-private:
+  bool newReport = false;
+  
   bool _pressButton(KeyPress kp);
   void clearTimeouts();
 
 public:
+  std::array<uint8_t, 6> getCurrentKeycodes();
   bool pressButton(uint8_t keycode);
   bool pressButton(uint8_t keycode, uint32_t time);
   bool releaseButton(uint8_t keycode);
@@ -34,5 +35,5 @@ public:
   bool isPressed(uint8_t keycode);
   bool anyKeyPressed();
 
-  std::array<uint8_t, 6> getCurrentKeycodes();
+  void sendNewReports();
 };
