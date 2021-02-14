@@ -19,6 +19,7 @@ add_executable(${NAME}
     
     src/System/System.cpp
     src/System/VoltMeter.cpp
+    src/System/Button.cpp
 )
 target_compile_options(${NAME} PUBLIC -Wno-psabi)
 
