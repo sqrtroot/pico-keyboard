@@ -10,6 +10,7 @@ public:
   KeyboardHid keyboard_hid;
 
   static System &getSystem();
+
   void systemTask();
 
   System(const System &) = delete;

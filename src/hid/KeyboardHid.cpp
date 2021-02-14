@@ -44,7 +44,7 @@ std::array<uint8_t, 6> KeyboardHid::getCurrentKeycodes() {
   std::array<uint8_t, 6> keycodes{
     0,
   };
-  if(keypresses.size() > 6){
+  if(keypresses.size() > 6) {
     keypresses.resize(6);
   }
   std::transform(keypresses.begin(), keypresses.end(), keycodes.begin(), [](const KeyPress &kp) {

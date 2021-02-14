@@ -23,8 +23,8 @@
  *
  */
 
-#include "tusb.h"
 #include "usb/usb_descriptors.h"
+#include "tusb.h"
 
 /* A combination of interfaces must have a unique product id, since PC will save device driver after the first plug.
  * Same VID/PID with different interface e.g MSC (first), then CDC (later) will possibly cause system error on PC.
@@ -44,7 +44,6 @@
 // Configuration Descriptor
 //--------------------------------------------------------------------+
 
-
 // Invoked when received GET CONFIGURATION DESCRIPTOR
 // Application return pointer to descriptor
 // Descriptor contents must exist long enough for transfer to complete
@@ -54,7 +53,6 @@
 //--------------------------------------------------------------------+
 
 // array of pointer to string descriptors
-
 
 // Invoked when received GET STRING DESCRIPTOR request
 // Application return pointer to descriptor, whose contents must exist long enough for transfer to complete

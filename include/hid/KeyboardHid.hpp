@@ -1,13 +1,13 @@
 #pragma once
 #include <array>
+#include <bsp/board.h>
+#include <experimental/fixed_capacity_vector>
 #include <hardware/timer.h>
 #include <optional>
 #include <pico/stdlib.h>
 #include <stdint.h>
 #include <tusb.h>
 #include <vector>
-#include <bsp/board.h>
-#include <experimental/fixed_capacity_vector>
 
 struct KeyPress {
   uint8_t                 keycode;
@@ -23,12 +23,13 @@ class KeyboardHid {
   std::experimental::fixed_capacity_vector<KeyPress, 6> keypresses;
 
   bool newReport = false;
-  
+
   bool _pressButton(KeyPress kp);
   void clearTimeouts();
 
 public:
   std::array<uint8_t, 6> getCurrentKeycodes();
+
   bool pressButton(uint8_t keycode);
   bool pressButton(uint8_t keycode, uint32_t time);
   bool releaseButton(uint8_t keycode);
