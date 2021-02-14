@@ -13,7 +13,6 @@ add_executable(${NAME}
     src/main.cpp
 
     src/usb/usb_device_callbacks.c
-    src/usb/usb_descriptors.c
 
     src/hid/hid_callbacks.cpp
     src/hid/KeyboardHid.cpp
