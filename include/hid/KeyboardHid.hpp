@@ -7,6 +7,7 @@
 #include <tusb.h>
 #include <vector>
 #include <bsp/board.h>
+#include <experimental/fixed_capacity_vector>
 
 struct KeyPress {
   uint8_t                 keycode;
@@ -19,7 +20,7 @@ struct KeyPress {
 };
 
 class KeyboardHid {
-  std::vector<KeyPress> keypresses;
+  std::experimental::fixed_capacity_vector<KeyPress, 6> keypresses;
 
   bool newReport = false;
   

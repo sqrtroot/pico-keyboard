@@ -29,7 +29,6 @@ bool KeyboardHid::isPressed(uint8_t keycode) {
 
 bool KeyboardHid::releaseButton(uint8_t keycode) {
   const auto it = std::find_if(keypresses.begin(), keypresses.end(), [&](const KeyPress &kp) {
-    printf("Checking if %02x == %02x\n", kp.keycode, keycode);
     return kp.keycode == keycode;
   });
   if(it == keypresses.end()) {

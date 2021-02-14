@@ -24,13 +24,13 @@ int main() {
     system.systemTask();
     if(!pressed) {
       if(!gpio_get(16)) {
-        system.keyboard_hid.pressButton(HID_KEY_A);
-        pressed                  = true;
+        system.keyboard_hid.pressButton(HID_KEY_F14, 100);
+        pressed = true;
       }
     } else {
       if(gpio_get(16)) {
-        system.keyboard_hid.releaseButton(HID_KEY_A);
-        pressed                  = false;
+        system.keyboard_hid.pressButton(HID_KEY_F13, 100);
+        pressed = false;
       }
     }
   }
